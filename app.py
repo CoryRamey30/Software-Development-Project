@@ -3,6 +3,10 @@ import plotly_express as px
 import pandas as pd
 df = pd.read_csv("vehicles_us (2).csv")
 
+df['model_year'] = df['model_year'].fillna(df['model_year'].mean())
+df['cylinders'] = df['cylinders'].fillna(df['cylinders'].mean())
+df['odometer'] = df['odometer'].fillna(df['odometer'].mean())
+
 df['manufacturer'] = df['model'].apply(lambda x: x.split()[0] if isinstance(x, str) else None)
 
 car_counts_df = df.groupby(['manufacturer', 'model_year']).size().reset_index(name='count')
